@@ -1,0 +1,87 @@
+<h1>Users</h1>
+
+<% users.forEach ((user) => { %> 
+    <% if(user._id != currentUser.id) { %> 
+
+
+<div class="card gedf-card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="mr-2">
+                    <img class="rounded-circle" width="45" src="<%= user.profilePicture %>" alt="">
+                </div>
+                <div class="ml-2">
+                    <div class="h5 m-0">@<%= user.userName %></div>
+                    <div class="h7 text-muted"><%= user.firstName %></div>
+                </div>
+            </div>
+
+            <% if(currentUser.friends.length != 0) { %> 
+            <% currentUser.friends.forEach((friend) => { %> 
+            <% if (friend == user._id) { %> 
+                
+            <div class="row">
+                <div class="col">
+                    <form action="/user/follow/<%= user._id%>" method="POST">
+                        <button class="btn btn-primary">Follow</button>
+                    </form>
+
+            </div>
+            
+            </div>
+            <% } else { %>
+            <div class="row">
+                <div class="col">
+
+                    <button class="btn btn-primary" disabled>Followed</button>
+
+            </div>
+            
+            </div>
+            <% }}) %>
+            <% } else { %>
+                <% if (currentUser.friends != user._id) { %> 
+                    <div class="row">
+                        <div class="col">
+                            <form action="/user/follow/<%= user._id%>" method="POST">
+                                <button class="btn btn-primary">Follow</button>
+                            </form>
+        
+                    </div>
+                    
+                    </div>
+                    <% } else { %>
+                    <div class="row">
+                        <div class="col">
+        
+                            <button class="btn btn-primary" disabled>Followed</button>
+        
+                    </div>
+                    
+                    </div>
+                
+
+             <% }} %>
+            
+ 
+        </div>
+        
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+           First Name :  <%= user.firstName %>
+        </p>
+        <p class="card-text">
+           Last Name : <%= user.lastName %>
+        </p>
+        <p class="card-text">
+            <%= user.firstName %>
+        </p>
+
+    </div>
+</div>
+    <br>
+    <% } %>
+
+    <% }) %>

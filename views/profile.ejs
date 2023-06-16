@@ -1,0 +1,138 @@
+<h1>Profile</h1>
+
+<div class="grid text-center" style="--bs-columns: 3;">
+<div>
+    <img src="<%= currentUser.profilePicture %>" class="rounded-circle mx-auto d-block" style="height: 250px; width: 250px;" alt="..."></div> 
+
+</div>
+<!-- starts -->
+<% for(let i = posts.length-1 ; i >= 0; i--) { %>
+
+<div class="card gedf-card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="mr-2">
+                    <img class="rounded-circle" width="45" src="<%= posts[i].createdBy.profilePicture %>" alt="">
+                </div>
+                <div class="ml-2">
+                    <div class="h5 m-0"><%= posts[i].createdBy.userName %></div>
+                    <div class="h7 text-muted"><%= posts[i].createdBy.firstName %></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+               
+                    <button class="btn btn-primary" value="#" class="text-white text-decoration-none" data-bs-toggle="modal" data-bs-target="#<%= posts[i]._id %>">Edit</button>
+
+                </div>
+                <div class="col">
+                <form action="/<%=posts[i]._id%>/profile%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="card-body">
+        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i><%= posts[i].time %></div>
+        <%#<a class="card-link" href="#">
+            <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adip.</h5>
+        </a>%>
+
+        <p class="card-text">
+            <%= posts[i].message %>
+        </p>
+    </div>
+    <div class="card-footer">
+ <form action="<%= posts[i]._id %>/profile/likes?_method=PUT" method="POST">
+        <button type="submit" class="btn btn-primary" ><i class="fa fa-gittip"></i> Like</button>
+           <% if(posts[i].likes != 0) { %> 
+            <span class="badge rounded-pill text-bg-danger">
+            <%= posts[i].likes %>
+            <% } %>
+        </span>
+        </form>
+        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+    </div>
+
+</div>
+<br>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="friends" tabindex="-1" aria-labelledby="friendsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/" method="post">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="friendsLabel">Friends</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ol>
+                    
+                <% for(let j = 0; j < currentUser.friends.length ; j++ ) { %> 
+                    
+                    
+                    <% for(let i = 0 ; i < user.length; i++) { %> 
+                        
+                   <% if ( currentUser.friends[j] == user[i].id) { %> 
+
+                
+                    <li>
+                    <h5><%= user[i].userName %> </h5>
+                    </li>
+
+                    
+                
+                <% } %>
+            
+                <% } %>
+            
+
+                <% } %>
+            
+        </ol>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- model 2 -->
+
+<div class="modal fade" id="<%= posts[i]._id %>" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form action="<%= posts[i]._id %>/profile/edit?_method=PUT" method="POST">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editLabel">Edit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+           
+                <input class="form-control" type="text" placeholder="Edit" name="message" value="<%= posts[i].message %>">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+<%}%>
