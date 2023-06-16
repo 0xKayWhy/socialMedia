@@ -2,7 +2,7 @@ const router = require("express").Router();
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
 const Reply = require("../models/reply.model");
-const secureUser = require("../config/securepage.config");
+const secureUser = require("../config/securePage.config");
 
 // const TimeAgo = require('javascript-time-ago');
 // const en = require('javascript-time-ago/locale/en')
